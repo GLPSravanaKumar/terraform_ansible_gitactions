@@ -16,7 +16,7 @@ terraform {
     key            = "terraform.tfstate"
     region         = "ap-south-1"
     encrypt        = true
-    dynamodb_table = aws_dynamodb_table.tf_lock.name
+    dynamodb_table = "aws_dynamodb_table.tf_lock.name"
   }
 }
 
