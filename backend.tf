@@ -9,13 +9,13 @@ resource "aws_dynamodb_table" "tf_lock" {
   }
 }
 
+
 terraform {
   backend "s3" {
-    bucket         = "backend-bucket-ansible"
-    key            = "terraform.tfstate"
-    region         = "ap-south-1"
-    encrypt        = true
-    dynamodb_table = "tf-lock-ansible"
+    bucket  = "backend-bucket-ansible"
+    key     = "terraform.tfstate"
+    region  = "ap-south-1"
+    encrypt = true
   }
 }
 
