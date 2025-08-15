@@ -1,5 +1,5 @@
 resource "aws_dynamodb_table" "tf_lock" {
-  name         = "terraform-lock-ansible"
+  name         = "tf-lock-ansible"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
@@ -15,7 +15,7 @@ terraform {
     key            = "terraform.tfstate"
     region         = "ap-south-1"
     encrypt        = true
-    dynamodb_table = "tf-state-lock-ansible"
+    dynamodb_table = "tf-lock-ansible"
   }
 }
 
