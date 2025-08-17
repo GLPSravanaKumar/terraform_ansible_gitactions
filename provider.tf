@@ -13,8 +13,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = "ap-south-1"
-  profile = "optum"
+  region = "ap-south-1"
 }
 
 provider "mongodbatlas" {
