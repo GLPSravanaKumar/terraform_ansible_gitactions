@@ -18,12 +18,13 @@ terraform {
 }
 
 provider "mongodbatlas" {
-
+  /* public_key  = var.MONGODB_ATLAS_PUBLIC_KEY
+  private_key = var.MONGODB_ATLAS_PRIVATE_KEY */
 }
 
 provider "aws" {
-  region  = "ap-south-1"
-  profile = "optum"
+  region = "ap-south-1"
+  #  profile = "optum"
 }
 
 provider "azurerm" {

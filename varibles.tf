@@ -13,3 +13,11 @@ variable "az_location2" {
 variable "mongodb_proj_name" {
 
 }
+/* variable "MONGODB_ATLAS_PUBLIC_KEY" {
+
+}
+variable "MONGODB_ATLAS_PRIVATE_KEY" {
+
+}
+
+*/
