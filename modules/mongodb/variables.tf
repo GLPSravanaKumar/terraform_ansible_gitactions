@@ -1,3 +1,4 @@
-variable "mongodb_proj_name" {
+/* variable "mongodb_proj_name" {
 
 }
+ */

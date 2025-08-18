@@ -1,0 +1,7 @@
+az_rgname1        = "glps-tf-rg1"
+az_location1      = "southindia"
+az_rgname2        = "glps-tf-rg2"
+az_location2      = "westindia"
+mongodb_proj_name = "glps_project"
+bucket_name       = "ansible-project-bkt"
+env               = "test"
