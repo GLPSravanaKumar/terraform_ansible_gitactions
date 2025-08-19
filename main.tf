@@ -5,7 +5,11 @@ module "az_resourcegroup" {
   az_rgname2   = var.az_rgname2
   az_location2 = var.az_location2
 }
-module "mongodb" {
+/* module "mongodb" {
   source            = "./modules/mongodb"
   mongodb_proj_name = var.mongodb_proj_name
+} */
+
+data "mongodbatlas_project" "existing_project" {
+  name = var.mongodb_proj_name
 }

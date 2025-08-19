@@ -18,7 +18,8 @@ terraform {
 }
 
 provider "mongodbatlas" {
-
+  /* public_key  = var.MONGODB_ATLAS_PUBLIC_KEY
+  private_key = var.MONGODB_ATLAS_PRIVATE_KEY */
 }
 
 provider "aws" {
