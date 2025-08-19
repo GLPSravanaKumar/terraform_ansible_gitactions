@@ -5,3 +5,4 @@ az_location2      = "westindia"
 mongodb_proj_name = "glps_project"
 bucket_name       = "ansible-project-bkt"
 env               = "test"
+
