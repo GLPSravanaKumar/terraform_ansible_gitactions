@@ -23,8 +23,8 @@ provider "mongodbatlas" {
 }
 
 provider "aws" {
-  region = "ap-south-1"
-  #  profile = "optum"
+  region  = "ap-south-1"
+  profile = "optum"
 }
 
 provider "azurerm" {
