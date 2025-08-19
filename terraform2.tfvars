@@ -1,1 +1,1 @@
-variable "myVariable" {}
+variable "ubuntu" {}
