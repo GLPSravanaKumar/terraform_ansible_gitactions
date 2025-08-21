@@ -42,7 +42,8 @@ env:
   TERRAFORM_PRODUCT_VERSION: 1.7.3
 
 jobs:
-  ools_check:
+  tools_check:
+    if: ${{ github.event.inputs.action == 'plan' }} # 👈 This ensures it runs only when the action is 'plan'
     name: 'Checking Tools Status'
     runs-on: [self-hosted,terraform]
     defaults:
@@ -51,9 +52,6 @@ jobs:
     steps:
     - name: Print Runner Hostname
       run: hostname
-      shell: bash
-    - name: Print Runner IP Address
-      run: curl -sL https://ipconfig.io
       shell: bash
     - name: Setup Terraform with specified version on the runner
       uses: hashicorp/setup-terraform@v2
@@ -69,6 +67,7 @@ jobs:
       shell: bash
 
   terraform:
+    if: ${{ github.event.inputs.action != 'plan' }} # 👈 This ensures it runs only when the action is not 
     runs-on: [self-hosted,terraform]   # 👈 This ensures it runs on your self-hosted runner
     steps:
       - name: Checkout Code
@@ -95,11 +94,15 @@ jobs:
 
       # ---------------- Terraform Init ----------------
       - name: Terraform Init
+        id: init
+        shell: bash
         run: terraform init -input=false
 
       # ---------------- Terraform Plan ----------------
       - name: Terraform Plan
-        if: ${{ github.event.inputs.action == 'plan' }}
+        id: plan
+        shell: bash
+        if: ${{ (steps.init.exit_code == 0) && (github.event.inputs.action == 'plan' ) }}
         run: terraform plan -var="environment=${{ github.event.inputs.environment }}" -input=false
 
       # ---------------- Terraform Apply ----------------
