@@ -3,6 +3,7 @@ name: Terraform Multi-Cloud
 on:
   workflow_run:
     branches: [main,tf_multicloud]
+    workflows: [tf_multicloud.yaml]
     types: 
       - completed
   workflow_dispatch:
