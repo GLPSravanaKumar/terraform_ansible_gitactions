@@ -110,15 +110,15 @@ jobs:
         id: plan
         shell: bash
         if: ${{ (steps.init.exit_code == 0) && (github.event.inputs.action == 'plan' ) }}
-        run: terraform plan -var="environment=${{ github.event.inputs.environment }}" -input=false
+        run: terraform plan 
 
 
       # ---------------- Terraform Apply ----------------
       - name: Terraform Apply
         if: ${{ github.event.inputs.action == 'apply' }}
-        run: terraform apply -auto-approve -var="environment=${{ github.event.inputs.environment }}" -input=false
+        run: terraform apply -auto-approve 
 
       # ---------------- Terraform Destroy ----------------
       - name: Terraform Destroy
         if: ${{ github.event.inputs.action == 'destroy' }}
-        run: terraform destroy -auto-approve -var="environment=${{ github.event.inputs.environment }}" -input=false
+        run: terraform destroy -auto-approve 
