@@ -48,12 +48,12 @@ resource "aws_s3_bucket_acl" "example" {
 resource "aws_s3_bucket_object" "object" {
   bucket = aws_s3_bucket.example.id
   key    = "ganesh.jpeg"
-  source = "C:/glps/terraform_project/terraform_ansible/ganesh.jpeg"
+  source = "${path.module}/ganesh.jpeg"
 
   # The filemd5() function is available in Terraform 0.11.12 and later
   # For Terraform 0.11.11 and earlier, use the md5() function and the file() function:
   # etag = "${md5(file("path/to/file"))}"
   content_type = "text/html"
   acl          = "public-read"
-  etag         = filemd5("C:/glps/terraform_project/terraform_ansible/ganesh.jpeg")
+  etag         = filemd5("${path.module}/ganesh.jpeg")
 }
