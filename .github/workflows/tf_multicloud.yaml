@@ -11,7 +11,7 @@ on:
       action:
         description: 'Terraform action to perform plan, apply, or destroy'
         required: true
-        default: 'apply'
+        default: 'plan'
         type: choice
         options:
           - plan
@@ -103,13 +103,14 @@ jobs:
         id: init
         shell: bash
         run: terraform init
-
+        
       # ---------------- Terraform Plan ----------------
       - name: Terraform Plan
         id: plan
         shell: bash
         if: ${{ (steps.init.exit_code == 0) && (github.event.inputs.action == 'plan' ) }}
         run: terraform plan -var="environment=${{ github.event.inputs.environment }}" -input=false
+
 
       # ---------------- Terraform Apply ----------------
       - name: Terraform Apply
