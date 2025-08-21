@@ -58,7 +58,7 @@ jobs:
     - name: Install unzip
       run: sudo apt-get update && sudo apt-get install -y unzip
     - name: Setup Terraform with specified version on the runner
-      uses: hashicorp/setup-terraform@v2
+      uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
         cli_config_credentials_hostname: app.terraform.io
@@ -75,11 +75,14 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
+      - name: Install unzip
+        run: sudo apt-get update && sudo apt-get install -y unzip    
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
+          cli_config_credentials_hostname: app.terraform.io
+          terraform_wrapper: true
 
       # ---------------- AWS ----------------
       - name: Configure AWS Credentials
