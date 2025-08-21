@@ -68,12 +68,9 @@ jobs:
       id: setup
       with:
         version: ${{ env.PACKER_PRODUCT_VERSION }}
-    - name: Check Terraform & Packer Version
-      run: terraform version && packer version
-      shell: bash
+    
 
   terraform:
-    if: ${{ github.event.inputs.action != 'plan' }} # 👈 This ensures it runs only when the action is not 
     runs-on: [self-hosted,terraform]   # 👈 This ensures it runs on your self-hosted runner
     steps:
       - name: Checkout Code
