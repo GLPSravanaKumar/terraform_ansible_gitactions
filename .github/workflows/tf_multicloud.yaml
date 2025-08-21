@@ -1,0 +1,73 @@
+name: Terraform Multicloud
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Terraform action to perform'
+        required: true
+        default: 'apply'
+        type: choice
+        options:
+          - plan
+          - apply
+          - destroy
+      cloud:
+        description: 'Choose the cloud provider'
+        required: true
+        default: 'aws'
+        type: choice
+        options:
+          - aws
+          - azure
+      environment:
+        description: 'Environment name (dev, stage, prod)'
+        required: true
+        default: 'dev'
+
+jobs:
+  terraform:
+    runs-on: self-hosted   # 👈 This ensures it runs on your self-hosted runner
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.7
+
+      # ---------------- AWS ----------------
+      - name: Configure AWS Credentials
+        if: ${{ github.event.inputs.cloud == 'aws' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      # ---------------- Azure ----------------
+      - name: Azure Login
+        if: ${{ github.event.inputs.cloud == 'azure' }}
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # ---------------- Terraform Init ----------------
+      - name: Terraform Init
+        run: terraform init -input=false
+
+      # ---------------- Terraform Plan ----------------
+      - name: Terraform Plan
+        if: ${{ github.event.inputs.action == 'plan' }}
+        run: terraform plan -var="environment=${{ github.event.inputs.environment }}" -input=false
+
+      # ---------------- Terraform Apply ----------------
+      - name: Terraform Apply
+        if: ${{ github.event.inputs.action == 'apply' }}
+        run: terraform apply -auto-approve -var="environment=${{ github.event.inputs.environment }}" -input=false
+
+      # ---------------- Terraform Destroy ----------------
+      - name: Terraform Destroy
+        if: ${{ github.event.inputs.action == 'destroy' }}
+        run: terraform destroy -auto-approve -var="environment=${{ github.event.inputs.environment }}" -input=false
