@@ -15,7 +15,7 @@ module "aws_s3_bucket" {
   env         = var.env
 }
 
-data "mongodbatlas_project" "existing_project" {
+/* data "mongodbatlas_project" "existing_project" {
   name = var.mongodb_proj_name
 }
 
@@ -24,3 +24,4 @@ resource "mongodbatlas_project_ip_access_list" "allow_all" {
   cidr_block = "160.238.72.164/32"
   comment    = "Allow all IPs"
 }
+ */

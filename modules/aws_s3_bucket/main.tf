@@ -45,7 +45,7 @@ resource "aws_s3_bucket_acl" "example" {
   acl    = "private"
 }
 
-resource "aws_s3_bucket_object" "object" {
+resource "aws_s3_object" "object" {
   bucket = aws_s3_bucket.example.id
   key    = "ganesh.jpeg"
   source = "${path.module}/ganesh.jpeg"

@@ -94,11 +94,12 @@ jobs:
           aws-region: us-east-1
 
       # ---------------- Azure ----------------
-#      - name: Azure Login
-#        uses: azure/login@v2
-#        with:
-#          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.ARM_CLIENT_ID }}
+          subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          tenant-id: ${{ secrets.ARM_TENANT_ID }}         
       # ---------------- Terraform Init ----------------
       - name: Terraform Init
         id: init
