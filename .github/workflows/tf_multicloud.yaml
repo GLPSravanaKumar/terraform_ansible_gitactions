@@ -102,7 +102,7 @@ jobs:
       - name: Terraform Init
         id: init
         shell: bash
-        run: terraform init -input=false
+        run: terraform init
 
       # ---------------- Terraform Plan ----------------
       - name: Terraform Plan
