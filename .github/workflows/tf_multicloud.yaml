@@ -40,6 +40,7 @@ env:
   ACTIONS_STEP_DEBUG: true
   PACKER_PRODUCT_VERSION: 1.8.5
   TERRAFORM_PRODUCT_VERSION: 1.7.3
+  ENVIRONMENT: ${{ github.event.inputs.environment }}
 
 jobs:
   tools_check:
