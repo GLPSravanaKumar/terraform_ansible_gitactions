@@ -8,7 +8,7 @@ output "az_rgname1" {
 output "az_rgname2" {
   value = module.az_resourcegroup.az_rgname2
 }
-output "mangodb_project_id" {
+/* output "mangodb_project_id" {
   value = data.mongodbatlas_project.existing_project.id
 }
 output "mangodb_project_name" {
@@ -20,3 +20,4 @@ output "mangodb_proj_org_id" {
 output "mangodb_proj_cluster_count" {
   value = data.mongodbatlas_project.existing_project.cluster_count
 }
+ */
