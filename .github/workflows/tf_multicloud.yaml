@@ -98,8 +98,9 @@ jobs:
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.ARM_CLIENT_ID }}
+          tenant-id: ${{ secrets.ARM_TENANT_ID }}
           subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-          tenant-id: ${{ secrets.ARM_TENANT_ID }}         
+          client-secret: ${{ secrets.ARM_CLIENT_SECRET_ID }}    
       # ---------------- Terraform Init ----------------
       - name: Terraform Init
         id: init
