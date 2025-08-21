@@ -1,10 +1,14 @@
-name: Terraform Multicloud
+name: Terraform Multi-Cloud
 
 on:
+  workflow_run:
+    branches: [main,tf_multicloud]
+    types: 
+      - completed
   workflow_dispatch:
     inputs:
       action:
-        description: 'Terraform action to perform'
+        description: 'Terraform action to perform plan, apply, or destroy'
         required: true
         default: 'apply'
         type: choice
@@ -12,22 +16,59 @@ on:
           - plan
           - apply
           - destroy
-      cloud:
-        description: 'Choose the cloud provider'
-        required: true
-        default: 'aws'
-        type: choice
-        options:
-          - aws
-          - azure
+#      cloud:
+#        description: 'Choose the cloud provider'
+#        required: true
+#        default: 'aws'
+#        type: choice
+#        options:
+#         - aws
+#          - azure
       environment:
         description: 'Environment name (dev, stage, prod)'
         required: true
         default: 'dev'
+env:
+  TERRAFORM_DESTROY: "NO"
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+  ARM_CLIENT_SECRET_ID: ${{secrets.ARM_CLIENT_SECRET_ID}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+  ACTIONS_STEP_DEBUG: true
+  PACKER_PRODUCT_VERSION: 1.8.5
+  TERRAFORM_PRODUCT_VERSION: 1.7.3
 
 jobs:
+  ools_check:
+    name: 'Checking Tools Status'
+    runs-on: [self-hosted,terraform]
+    defaults:
+     run:
+       shell: bash
+    steps:
+    - name: Print Runner Hostname
+      run: hostname
+      shell: bash
+    - name: Print Runner IP Address
+      run: curl -sL https://ipconfig.io
+      shell: bash
+    - name: Setup Terraform with specified version on the runner
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
+    - name: Setup `packer`
+      uses: hashicorp/setup-packer@main
+      id: setup
+      with:
+        version: ${{ env.PACKER_PRODUCT_VERSION }}
+    - name: Check Terraform & Packer Version
+      run: terraform version && packer version
+      shell: bash
+
   terraform:
-    runs-on: self-hosted   # 👈 This ensures it runs on your self-hosted runner
+    runs-on: [self-hosted,terraform]   # 👈 This ensures it runs on your self-hosted runner
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -35,11 +76,10 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.9.7
+          terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
 
       # ---------------- AWS ----------------
       - name: Configure AWS Credentials
-        if: ${{ github.event.inputs.cloud == 'aws' }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -47,11 +87,10 @@ jobs:
           aws-region: us-east-1
 
       # ---------------- Azure ----------------
-      - name: Azure Login
-        if: ${{ github.event.inputs.cloud == 'azure' }}
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+#      - name: Azure Login
+#        uses: azure/login@v2
+#        with:
+#          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # ---------------- Terraform Init ----------------
       - name: Terraform Init
