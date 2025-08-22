@@ -71,7 +71,7 @@ jobs:
       with:
         version: ${{ env.PACKER_PRODUCT_VERSION }}
     - name: Setup Azure CLI
-      uses: azure/setup-azure@v3
+      uses: azure/setup-azure@v2
       with:
         version: latest
 
@@ -90,7 +90,7 @@ jobs:
           terraform_wrapper: true
       # Install Azure CLI
       - name: Setup Azure CLI
-        uses: azure/setup-azure@v3
+        uses: azure/setup-azure@v2
         with:
           version: latest
       # ---------------- AWS ----------------
