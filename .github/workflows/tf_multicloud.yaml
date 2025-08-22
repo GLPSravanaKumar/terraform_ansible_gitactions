@@ -33,10 +33,11 @@ env:
   TERRAFORM_DESTROY: "NO"
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
-  AZURE_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
-  AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
-  AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
+  AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
+#  AZURE_CLIENT_ID: ${{secrets.AZURE_CLIENT_ID}}
+#  AZURE_CLIENT_SECRET: ${{secrets.AZURE_CLIENT_SECRET}}
+#  AZURE_SUBSCRIPTION_ID: ${{secrets.AZURE_SUBSCRIPTION_ID}}
+#  AZURE_TENANT_ID: ${{secrets.AZURE_TENANT_ID}}
   ACTIONS_STEP_DEBUG: true
   PACKER_PRODUCT_VERSION: 1.8.5
   TERRAFORM_PRODUCT_VERSION: 1.7.3
@@ -97,11 +98,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-          enable-AzPSSession: true
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: Verify Azure CLI
         run: az account show
       # ---------------- Terraform Init ----------------
