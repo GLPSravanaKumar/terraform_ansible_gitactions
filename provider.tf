@@ -29,5 +29,6 @@ provider "aws" {
 
 provider "azurerm" {
   features {}
+  subscription_id = "1d7b8351-e118-4142-8865-634d6b506c5d"
 }
 
