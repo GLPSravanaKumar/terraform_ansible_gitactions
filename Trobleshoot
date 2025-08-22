@@ -1,0 +1,26 @@
+* Node.js, aws , az cli and credentils must be added.
+* When installing the self-hosted runner on a virtual machine, labels can be provided. Those labels must match the "runs-on" in the workflow pipeline, otherwise the pipeline will remain pending.
+* The Azure CLI must be installed and configured with the correct subscription ID.
+* The Azure subscription ID can be set in the workflow using the `azure account set --subscription` command.
+* Ensure that the Azure, AWS credentials are set as secrets in the GitHub repository.
+* The Terraform provider configuration should include the subscription ID for Azure.
+* setup-terraform requires unzip to extract the Terraform binary, but the runner image you’re using doesn’t have unzip installed by default. install unzip before terrform installation
+* Check Service Principal Permissions,Run this locally (with same credentials)
+az login --service-principal -u <client_id> -p <client_secret> --tenant <tenant_id>
+If you see no subscriptions, the SPN has no role assigned.
+👉 Fix: Go to Azure Portal → Subscriptions → Access control (IAM) → Add role assignment → Contributor/Owner → Assign to your SPN.
+
+* Explicitly set the Subscription 
+    - name: Set Azure Subscription
+  run: |
+    az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+* Assign Role to the Service Principal :
+
+   # If you want to give "Contributor" at subscription level:
+
+    az role assignment create --assignee <APP_ID> --role "Contributor" --subscription <subscription_id> --scope /subscriptions/<subscription_id> 
+
+   # If you want at resource group level:
+
+    az role assignment create --assignee <APP_ID> --role "Contributor" --subscription <subscription_id> --scope /subscriptions/<subscription_id>/resourceGroups/<your-rg-name>
