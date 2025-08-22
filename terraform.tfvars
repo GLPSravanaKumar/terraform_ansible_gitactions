@@ -3,6 +3,6 @@ az_location1      = "southindia"
 az_rgname2        = "glps-tf-rg2"
 az_location2      = "westindia"
 mongodb_proj_name = "glps_project"
-bucket_name       = "ansible-project-bkt"
+bucket_name       = "glps-ans-backend-bucket"
 env               = "test"
 
