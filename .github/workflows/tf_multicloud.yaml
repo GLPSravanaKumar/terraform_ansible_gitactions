@@ -70,7 +70,10 @@ jobs:
       id: setup
       with:
         version: ${{ env.PACKER_PRODUCT_VERSION }}
-    
+    - name: Setup Azure CLI
+      uses: azure/setup-azure@v3
+      with:
+        version: latest
 
   terraform:
     runs-on: [self-hosted]   # 👈 This ensures it runs on your self-hosted runner
@@ -85,7 +88,11 @@ jobs:
           terraform_version: ${{ env.TERRAFORM_PRODUCT_VERSION }}
           cli_config_credentials_hostname: app.terraform.io
           terraform_wrapper: true
-
+      # Install Azure CLI
+      - name: Setup Azure CLI
+        uses: azure/setup-azure@v3
+        with:
+          version: latest
       # ---------------- AWS ----------------
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
