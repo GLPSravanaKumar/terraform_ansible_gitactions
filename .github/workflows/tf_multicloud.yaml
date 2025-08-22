@@ -112,11 +112,7 @@ jobs:
         shell: bash
         run: |
           azure account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          terraform init && echo "Terraform initialized successfully" || echo "Terraform initialization failed"
-          terraform validate && echo "Terraform configuration is valid" || echo "Terraform configuration is invalid"
-          terraform format -check && echo "Terraform files are formatted correctly" || echo "Terraform files are not formatted correctly"
-      
-        
+          terraform init && terraform validate
       # ---------------- Terraform Plan ----------------
       - name: Terraform Plan
         id: plan
