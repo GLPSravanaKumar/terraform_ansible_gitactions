@@ -110,7 +110,9 @@ jobs:
       - name: Terraform Init
         id: init
         shell: bash
-        run: terraform init
+        run: 
+          azure account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          terraform init
         
       # ---------------- Terraform Plan ----------------
       - name: Terraform Plan
