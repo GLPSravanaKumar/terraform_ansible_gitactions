@@ -47,7 +47,7 @@ jobs:
   tools_check:
     if: ${{ github.event.inputs.action == 'plan' }} # 👈 This ensures it runs only when the action is 'plan'
     name: 'Checking Tools Status'
-    runs-on: [self-hosted,terraform]
+    runs-on: [self-hosted]
     defaults:
      run:
        shell: bash
@@ -73,7 +73,7 @@ jobs:
     
 
   terraform:
-    runs-on: [self-hosted,terraform]   # 👈 This ensures it runs on your self-hosted runner
+    runs-on: [self-hosted]   # 👈 This ensures it runs on your self-hosted runner
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
