@@ -3,7 +3,6 @@ name: Terraform Multi-Cloud
 on:
   workflow_run:
     branches: [main,tf_multicloud]
-    workflows: [tf_multicloud.yaml]
     types: 
       - completed
   workflow_dispatch:
@@ -70,10 +69,10 @@ jobs:
       id: setup
       with:
         version: ${{ env.PACKER_PRODUCT_VERSION }}
-    - name: Setup Azure CLI
-      uses: azure/setup-azure@v2
-      with:
-        version: latest
+    # Install Azure CLI
+    - name: Install Azure CLI
+      run: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
   terraform:
     runs-on: [self-hosted]   # 👈 This ensures it runs on your self-hosted runner
@@ -89,19 +88,17 @@ jobs:
           cli_config_credentials_hostname: app.terraform.io
           terraform_wrapper: true
       # Install Azure CLI
-      - name: Setup Azure CLI
-        uses: azure/setup-azure@v2
-        with:
-          version: latest
-      # ---------------- AWS ----------------
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      # AWS
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-
-      # ---------------- Azure ----------------
+      # Azure
       - name: Azure Login
         uses: azure/login@v2
         with:
