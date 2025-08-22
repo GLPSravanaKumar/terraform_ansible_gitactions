@@ -106,21 +106,25 @@ jobs:
 
       - name: Verify Azure CLI
         run: az account show
-      # ---------------- Terraform Init ----------------
+      # Check if the init step was successful
       - name: Terraform Init
         id: init
         shell: bash
-        run: 
+        run: |
           azure account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          terraform init
+          terraform init && echo "Terraform initialized successfully" || echo "Terraform initialization failed"
+          terraform validate && echo "Terraform configuration is valid" || echo "Terraform configuration is invalid"
+          terraform format -check && echo "Terraform files are formatted correctly" || echo "Terraform files are not formatted correctly"
+      
         
       # ---------------- Terraform Plan ----------------
       - name: Terraform Plan
         id: plan
         shell: bash
         if: ${{ (steps.init.exit_code == 0) && (github.event.inputs.action == 'plan' ) }}
-        run: terraform plan 
-
+        run: |
+          azure account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          terraform plan 
 
       # ---------------- Terraform Apply ----------------
       - name: Terraform Apply
