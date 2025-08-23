@@ -5,7 +5,7 @@ resource "aws_subnet" "public_subnets" {
   vpc_id                  = var.vpc_id
   depends_on              = [var.vpc_id]
   tags = {
-    subnet = "Public Subnet ${count.index + 1}"
+    subnet = "Public Subnet-${count.index + 1}"
   }
 }
 
@@ -16,6 +16,6 @@ resource "aws_subnet" "private_subnets" {
   vpc_id                  = var.vpc_id
   depends_on              = [var.vpc_id]
   tags = {
-    subnet = "Private Subnet ${count.index + 1}"
+    subnet = "Private Subnet-${count.index + 1}"
   }
 }

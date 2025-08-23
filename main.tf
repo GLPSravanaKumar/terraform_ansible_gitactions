@@ -23,9 +23,10 @@ module "aws_subnets" {
   vpc_id               = module.aws_vpc.vpc_id
 }
 module "aws_route_tables" {
-  source              = "./modules/aws_route_tables"
-  vpc_id              = module.aws_vpc.vpc_id
-  public_subnet_cidrs = var.public_subnet_cidrs
+  source               = "./modules/aws_route_tables"
+  vpc_id               = module.aws_vpc.vpc_id
+  public_subnet_cidrs  = var.public_subnet_cidrs
+  private_subnet_cidrs = var.private_subnet_cidrs
 }
 
 /* module "mongodb" {
