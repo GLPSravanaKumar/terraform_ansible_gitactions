@@ -22,10 +22,10 @@ output "mangodb_proj_cluster_count" {
 }
  */
 output "public_subnet_ids" {
-  value = module.aws_subnets.public_subnet_id
+  value = module.aws_subnets.public_subnet_ids
 }
 output "private_subnet_ids" {
-  value = module.aws_subnets.private_subnet_id
+  value = module.aws_subnets.private_subnet_ids
 }
 output "vpc_id" {
   value = module.aws_vpc.vpc_id

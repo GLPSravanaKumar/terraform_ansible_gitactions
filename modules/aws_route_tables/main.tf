@@ -18,14 +18,36 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
+resource "aws_eip" "eip" {
+  count  = length(var.public_subnet_cidrs)
+  domain = var.vpc_id
+  tags = {
+    Name = "Eip"
+  }
+}
+resource "aws_nat_gateway" "nat_gw" {
+  count         = length(var.public_subnet_cidrs)
+  allocation_id = aws_eip.eip[count.index].id
+  subnet_id     = (var.public_subnet_ids[count.index].id)
+
+  tags = {
+    Name = "Nat-Gw"
+  }
+  depends_on = [aws_internet_gateway.igw]
+}
+
 resource "aws_route_table_association" "public_rt_association" {
   count          = length(var.public_subnet_cidrs)
-  subnet_id      = element(var.public_subnet_cidrs, count.index)
+  subnet_id      = (var.public_subnet_ids[count.index].id)
   route_table_id = aws_route_table.public_rt.id
 }
 
 resource "aws_route_table" "private_rt" {
   vpc_id = var.vpc_id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_nat_gateway.nat_gw[0].id
+  }
 
   tags = {
     name = "private-rt"
@@ -33,6 +55,6 @@ resource "aws_route_table" "private_rt" {
 }
 resource "aws_route_table_association" "private_rt_association" {
   count          = length(var.private_subnet_cidrs)
-  subnet_id      = element(var.private_subnet_cidrs, count.index)
+  subnet_id      = (var.private_subnet_ids[count.index].id)
   route_table_id = aws_route_table.private_rt.id
 }

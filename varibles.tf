@@ -44,3 +44,12 @@ variable "vpc_cidr_block" {
   description = "VPC Cidr block"
   type        = string
 }
+variable "public_subnet_ids" {
+  description = "Public subnet CIDR values"
+  type        = list(string)
+
+}
+variable "private_subnet_ids" {
+  description = "private subnet cidr values"
+  type        = list(string)
+}
