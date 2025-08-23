@@ -41,7 +41,7 @@ jobs:
   tools_check:
     if: ${{ github.event.inputs.action == 'plan' }} # 👈 This ensures it runs only when the action is 'plan'
     name: 'Checking Tools Status'
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
     defaults:
      run:
        shell: bash
@@ -70,7 +70,7 @@ jobs:
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
   terraform:
-    runs-on: [self-hosted]   # 👈 This ensures it runs on your self-hosted runner
+    runs-on: ubuntu-latest   # 👈 This ensures it runs on your self-hosted runner
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
