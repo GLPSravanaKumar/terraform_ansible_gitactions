@@ -16,6 +16,7 @@ resource "aws_route_table" "public_rt" {
   tags = {
     name = "public-rt"
   }
+  depends_on = [var.public_subnet_ids]
 }
 
 resource "aws_eip" "eip" {
@@ -33,7 +34,7 @@ resource "aws_nat_gateway" "nat_gw" {
   tags = {
     Name = "Nat-Gw"
   }
-  depends_on = [aws_internet_gateway.igw]
+  depends_on = [aws_internet_gateway.igw, var.public_subnet_ids]
 }
 
 resource "aws_route_table_association" "public_rt_association" {
@@ -52,6 +53,7 @@ resource "aws_route_table" "private_rt" {
   tags = {
     name = "private-rt"
   }
+  depends_on = [var.private_subnet_ids]
 }
 resource "aws_route_table_association" "private_rt_association" {
   count          = length(var.private_subnet_cidrs)
