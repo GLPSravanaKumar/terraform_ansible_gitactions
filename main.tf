@@ -5,15 +5,27 @@ module "az_resourcegroup" {
   az_rgname2   = var.az_rgname2
   az_location2 = var.az_location2
 }
+
+module "aws_s3_bucket" {
+  source      = "./modules/aws_s3_bucket"
+  bucket_name = var.bucket_name
+}
+
+module "aws_vpc" {
+  source         = "./modules/aws_vpc"
+  vpc_cidr_block = var.vpc_cidr_block
+}
+
+module "aws_subnets" {
+  source               = "./modules/aws_subnets"
+  public_subnet_cidrs  = var.public_subnet_cidrs
+  private_subnet_cidrs = var.private_subnet_cidrs
+}
+
 /* module "mongodb" {
   source            = "./modules/mongodb"
   mongodb_proj_name = var.mongodb_proj_name
 } */
-module "aws_s3_bucket" {
-  source      = "./modules/aws_s3_bucket"
-  bucket_name = var.bucket_name
-  env         = var.env
-}
 
 /* data "mongodbatlas_project" "existing_project" {
   name = var.mongodb_proj_name

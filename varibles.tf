@@ -31,6 +31,16 @@ variable "bucket_name" {
   description = "Name of the storage bucket"
 }
 
-variable "env" {
-  description = "Deployment environment (e.g., dev, test, prod)"
+
+variable "public_subnet_cidrs" {
+  description = "List of CIDR blocks for public subnets"
+  type        = list(string)
+}
+variable "private_subnet_cidrs" {
+  description = "List of CIDR blocks for private subnets"
+  type        = list(string)
+}
+variable "vpc_cidr_block" {
+  description = "VPC Cidr block"
+  type        = string
 }

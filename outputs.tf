@@ -21,3 +21,15 @@ output "mangodb_proj_cluster_count" {
   value = data.mongodbatlas_project.existing_project.cluster_count
 }
  */
+output "public_subnet_ids" {
+  value = module.aws_subnets.public_subnet_id
+}
+output "private_subnet_ids" {
+  value = module.aws_subnets.private_subnet_id
+}
+output "vpc_id" {
+  value = module.aws_vpc.vpc.id
+}
+output "vpc_cidr_block" {
+  value = module.aws_vpc.vpc.cidr_block
+}

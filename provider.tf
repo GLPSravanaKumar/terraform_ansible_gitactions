@@ -23,9 +23,18 @@ provider "mongodbatlas" {
 }
 
 provider "aws" {
-  region = "ap-south-1"
+  region = "us-east-1"
   #  profile = "optum"
+  default_tags {
+    tags = {
+      Environment = "Testing"
+      Department  = "Optum_health"
+      Cient       = "UHG"
+    }
+  }
 }
+
+
 
 provider "azurerm" {
   features {}
