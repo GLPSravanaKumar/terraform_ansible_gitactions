@@ -28,8 +28,8 @@ output "private_subnet_ids" {
   value = module.aws_subnets.private_subnet_id
 }
 output "vpc_id" {
-  value = module.aws_vpc.vpc.id
+  value = module.aws_vpc.vpc_id
 }
 output "vpc_cidr_block" {
-  value = module.aws_vpc.vpc.cidr_block
+  value = module.aws_vpc.vpc_cidr_block
 }

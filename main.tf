@@ -20,6 +20,7 @@ module "aws_subnets" {
   source               = "./modules/aws_subnets"
   public_subnet_cidrs  = var.public_subnet_cidrs
   private_subnet_cidrs = var.private_subnet_cidrs
+  vpc_id               = module.aws_vpc.vpc_id
 }
 
 /* module "mongodb" {
