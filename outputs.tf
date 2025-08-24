@@ -42,3 +42,12 @@ output "private_sg_id" {
 output "keypair_id" {
   value = module.aws_ec2.keypair_id
 }
+output "public_route_table_ids" {
+  value = module.aws_route_tables.public_route_table_ids
+}
+output "private_route_table_ids" {
+  value = module.aws_route_tables.private_route_table_ids
+}
+output "nat_gw_ids" {
+  value = module.aws_route_tables.nat_gw_ids
+}
