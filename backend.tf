@@ -4,8 +4,8 @@ terraform {
     key    = "terraform.tfstate"
     region = "ap-south-1"
     #  profile = "optum"
-    encrypt = true
-    #  dynamodb_table = "tf-lock-ansible"
+    encrypt        = true
+    dynamodb_table = "glps_backend_lock_table"
   }
 }
 
