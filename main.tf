@@ -34,6 +34,9 @@ module "aws_security_groups" {
   source = "./modules/aws_security_groups"
   vpc_id = module.aws_vpc.vpc_id
 }
+module "aws_ec2" {
+  source = "./modules/aws_ec2"
+}
 
 /* module "mongodb" {
   source            = "./modules/mongodb"
