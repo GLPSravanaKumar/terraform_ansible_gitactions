@@ -30,6 +30,10 @@ module "aws_route_tables" {
   public_subnet_ids    = module.aws_subnets.public_subnet_ids
   private_subnet_ids   = module.aws_subnets.private_subnet_ids
 }
+module "aws_security_groups" {
+  source = "./modules/aws_security_groups"
+  vpc_id = module.aws_vpc.vpc_id
+}
 
 /* module "mongodb" {
   source            = "./modules/mongodb"

@@ -34,5 +34,8 @@ output "vpc_cidr_block" {
   value = module.aws_vpc.vpc_cidr_block
 }
 output "pub_sg_id" {
-  value = module.aws_security_group.pub_sg_id
+  value = module.aws_security_groups.pub_sg_id
+}
+output "private_sg_id" {
+  value = module.aws_security_groups.private_sg_id
 }
