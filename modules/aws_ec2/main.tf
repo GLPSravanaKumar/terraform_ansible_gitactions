@@ -8,7 +8,8 @@ data "aws_key_pair" "key" {
   }
 }
 data "aws_ami" "ami" {
-  owners = ["099720109477"] #aws ec2 describe-images --region us-east-1 --image-ids ami-0360c520857e3138f
+  most_recent = true
+  owners      = ["099720109477"] #aws ec2 describe-images --region us-east-1 --image-ids ami-0360c520857e3138f
 
   filter {
     name   = "name"
