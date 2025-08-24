@@ -3,7 +3,7 @@ data "aws_key_pair" "key" {
   include_public_key = true
 
   filter {
-    name   = "ami"
+    name   = "tag:ami"
     values = ["ubuntu"]
   }
 }
