@@ -51,3 +51,6 @@ output "private_route_table_ids" {
 output "nat_gw_ids" {
   value = module.aws_route_tables.nat_gw_ids
 }
+output "ami_image_id" {
+  value = module.aws_ec2.ami_image_id
+}
