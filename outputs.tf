@@ -54,3 +54,9 @@ output "nat_gw_ids" {
 output "ami_image_id" {
   value = module.aws_ec2.ami_image_id
 }
+output "aws_instance_id" {
+  value = module.aws_ec2.aws_instance_id
+}
+output "public_server_ip" {
+  value = module.aws_ec2.public_server_ip
+}

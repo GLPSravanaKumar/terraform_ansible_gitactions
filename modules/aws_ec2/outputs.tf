@@ -4,3 +4,9 @@ output "keypair_id" {
 output "ami_image_id" {
   value = data.aws_ami.ami.image_id
 }
+output "aws_instance_id" {
+  value = aws_instance.public_servers[*].id
+}
+output "public_server_ip" {
+  value = aws_instance.public_servers[*].public_ip
+}
