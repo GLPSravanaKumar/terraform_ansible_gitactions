@@ -60,3 +60,9 @@ output "aws_instance_id" {
 output "public_server_ip" {
   value = module.aws_ec2.public_server_ip
 }
+output "s3_bucket_arn" {
+  value = module.aws_s3_bucket.s3_bucket_arn
+}
+output "s3_bucket_domain_name" {
+  value = module.aws_s3_bucket.s3_bucket_domain_name
+}

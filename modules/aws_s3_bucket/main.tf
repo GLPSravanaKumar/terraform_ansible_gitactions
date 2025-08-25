@@ -1,13 +1,13 @@
-resource "aws_s3_bucket" "example" {
+data "aws_s3_bucket" "example" {
   bucket = var.bucket_name
-  tags = {
+  /* tags = {
     Name = var.bucket_name
-  }
+  } */
 }
 
 
 resource "aws_s3_bucket_policy" "policy_attachment" {
-  bucket = aws_s3_bucket.example.id
+  bucket = data.aws_s3_bucket.example.id
   policy = data.aws_iam_policy_document.bucket_policy.json
 
 }
@@ -27,21 +27,21 @@ data "aws_iam_policy_document" "bucket_policy" {
     ]
 
     resources = [
-      aws_s3_bucket.example.arn,
-      "${aws_s3_bucket.example.arn}/*",
+      data.aws_s3_bucket.example.arn,
+      "${data.aws_s3_bucket.example.arn}/*",
     ]
   }
 }
 
 resource "aws_s3_bucket_ownership_controls" "example" {
-  bucket = aws_s3_bucket.example.id
+  bucket = data.aws_s3_bucket.example.id
   rule {
     object_ownership = "BucketOwnerPreferred"
   }
 }
 
 resource "aws_s3_bucket_public_access_block" "example" {
-  bucket = aws_s3_bucket.example.id
+  bucket = data.aws_s3_bucket.example.id
 
   block_public_acls       = false
   block_public_policy     = false
@@ -55,12 +55,12 @@ resource "aws_s3_bucket_acl" "example" {
     aws_s3_bucket_policy.policy_attachment
   ]
 
-  bucket = aws_s3_bucket.example.id
+  bucket = data.aws_s3_bucket.example.id
   acl    = "public-read"
 }
 
 resource "aws_s3_object" "object" {
-  bucket = aws_s3_bucket.example.id
+  bucket = data.aws_s3_bucket.example.id
   key    = "ganesh.jpeg"
   source = "${path.module}/ganesh.jpeg"
 
