@@ -21,7 +21,7 @@ resource "aws_route_table" "public_rt" {
 
 resource "aws_eip" "eip" {
   count  = length(var.public_subnet_cidrs)
-  domain = var.vpc_id
+  domain = "vpc"
   tags = {
     Name = "Eip"
   }
