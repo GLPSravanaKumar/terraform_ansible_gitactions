@@ -56,7 +56,7 @@ resource "aws_s3_bucket_acl" "example" {
   ]
 
   bucket = data.aws_s3_bucket.example.id
-  acl    = "public-read"
+  acl    = "public-read-write"
 }
 
 resource "aws_s3_object" "object" {
