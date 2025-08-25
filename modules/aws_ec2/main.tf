@@ -25,15 +25,13 @@ resource "aws_instance" "public_servers" {
   associate_public_ip_address = true
   vpc_security_group_ids      = [var.pub_sg_id]
   user_data                   = <<-EOF
-        #!/bin/bash
-        sudo apt update -y
-        sudo apt install -y httpd
-        sudo systemctl start httpd
-        sudo systemctl enable httpd
-        echo "<h1>Hello from Terraform!</h1>" > /var/www/html/index.html
-      EOF
-
-
+    #!/bin/bash
+    apt update -y
+    apt install -y apache2
+    systemctl start apache2
+    systemctl enable apache2
+    echo "<h1>Hello from Terraform!</h1>" > /var/www/html/index.html
+  EOF
   tags = {
     Name = "public_webserver-${count.index + 1}"
   }
