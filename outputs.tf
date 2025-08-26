@@ -39,9 +39,9 @@ output "pub_sg_id" {
 output "private_sg_id" {
   value = module.aws_security_groups.private_sg_id
 }
-output "keypair_id" {
+/* output "keypair_id" {
   value = module.aws_ec2.keypair_id
-}
+} */
 output "public_route_table_ids" {
   value = module.aws_route_tables.public_route_table_ids
 }

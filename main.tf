@@ -40,6 +40,7 @@ module "aws_ec2" {
   public_subnet_ids   = module.aws_subnets.public_subnet_ids
   pub_sg_id           = module.aws_security_groups.pub_sg_id
   instance_type       = var.instance_type
+  ami                 = var.ami
 }
 
 /* module "mongodb" {

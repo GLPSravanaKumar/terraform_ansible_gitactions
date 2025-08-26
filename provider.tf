@@ -29,7 +29,7 @@ provider "aws" {
     tags = {
       Environment = "Testing"
       Department  = "Optum_health"
-      Cient       = "UHG"
+      Cient       = upper("uhg")
     }
   }
 }

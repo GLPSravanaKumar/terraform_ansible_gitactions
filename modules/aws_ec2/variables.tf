@@ -11,3 +11,6 @@ variable "pub_sg_id" {
 variable "public_subnet_cidrs" {
   description = "public subnet cidr values"
 }
+variable "ami" {
+  description = "AMI ID for the EC2 instance"
+}

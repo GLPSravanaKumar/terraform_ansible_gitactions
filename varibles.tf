@@ -47,3 +47,6 @@ variable "vpc_cidr_block" {
 variable "instance_type" {
   description = "Type of EC2 instance"
 }
+variable "ami" {
+  description = "Type of instance Ami "
+}
