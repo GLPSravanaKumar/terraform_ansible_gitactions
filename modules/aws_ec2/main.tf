@@ -33,6 +33,6 @@ resource "aws_instance" "public_servers" {
     echo "<h1>Hello from Terraform!</h1>" > /var/www/html/index.html
   EOF
   tags = {
-    Name = "public_webserver-${count.index + 1}"
+    Name = "public_webserver-${count.index +1}"
   }
 }
