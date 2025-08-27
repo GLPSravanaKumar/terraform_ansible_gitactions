@@ -66,3 +66,6 @@ output "s3_bucket_arn" {
 output "s3_bucket_domain_name" {
   value = module.aws_s3_bucket.s3_bucket_domain_name
 }
+output "private_server_ip" {
+  value = module.aws_ec2.private_server_ip
+}

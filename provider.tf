@@ -28,7 +28,6 @@ provider "aws" {
   default_tags {
     tags = {
       Environment = "Testing"
-      Department  = "Optum_health"
       Cient       = upper("uhg")
     }
   }

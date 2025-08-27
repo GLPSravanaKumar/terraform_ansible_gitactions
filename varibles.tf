@@ -50,3 +50,6 @@ variable "instance_type" {
 variable "ami" {
   description = "Type of instance Ami "
 }
+variable "department" {
+  description = "value of department tag"
+}

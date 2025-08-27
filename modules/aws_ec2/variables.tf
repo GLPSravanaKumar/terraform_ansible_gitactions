@@ -14,3 +14,13 @@ variable "public_subnet_cidrs" {
 variable "ami" {
   description = "AMI ID for the EC2 instance"
 }
+variable "private_subnet_ids" {
+  description = "List of private subnet IDs"
+  type        = list(string)
+}
+variable "private_sg_id" {
+  description = "value of private security group id"
+}
+variable "private_subnet_cidrs" {
+  description = "private subnet cidr values"
+}

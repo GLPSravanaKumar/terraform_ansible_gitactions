@@ -7,3 +7,6 @@ variable "private_subnet_cidrs" {
 variable "vpc_id" {
   description = "vpc id"
 }
+variable "department" {
+  description = "value of department tag"
+}

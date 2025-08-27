@@ -1,0 +1,92 @@
+terraform main important points
+1. **Providers**: Define which cloud providers (like AWS, Azure, GCP) or services you will be using in your infrastructure.
+
+2. **Resources**: The core building blocks of your infrastructure, representing components like virtual machines, databases, and networking elements.
+
+3. **Variables**: Used to parameterize your configurations, allowing for more flexible and reusable code.
+
+4. **Outputs**: Define values that you want to be easily accessible after your infrastructure is created, such as IP addresses or resource IDs.
+
+5. **State Management**: Terraform maintains a state file to keep track of the resources it manages. This file is crucial for understanding the current state of your infrastructure.
+
+6. **Modules**: Reusable configurations that can be shared and versioned, allowing for better organization and reuse of code.
+
+7. **Provisioners**: Used to execute scripts or commands on a local or remote machine as part of the resource creation process.
+
+8. **Lifecycle Management**: Control how resources are created, updated, and deleted using lifecycle rules.
+
+9. **Terraform CLI**: Command-line interface used to interact with Terraform, including commands like `init`, `plan`, `apply`, and `destroy`.
+
+10. **Workspaces**: Allow for managing multiple environments (like development, staging, production) within the same configuration.
+
+11. **Backend Configuration**: Specifies where the Terraform state file is stored, which can be local or remote (e.g., S3, Terraform Cloud).
+
+12. **Interpolation**: A way to reference variables, resource attributes, and outputs within your configuration files.
+
+13. **Terraform Cloud/Enterprise**: A managed service that provides collaboration, governance, and automation features for Terraform users.
+
+14. **Version Control**: Best practices for managing your Terraform code in version control systems like Git to track changes and collaborate with others.
+
+15. **Argument Reference**: Understanding how to reference and use input variables, resource attributes, and outputs effectively within your Terraform configurations. (input reference)
+
+16. **Attribute Reference**: Knowing how to access and utilize the attributes of resources created by Terraform. ( It will created after execution apply command)
+
+17. **State Locking**: Prevents concurrent operations on the same state file to avoid conflicts and ensure consistency.
+
+18. **implicit Dependencies**: Terraform automatically infers dependencies between resources based on references in the configuration.if resource A references resource B, Terraform knows to create B before A
+
+    Ex: resource "aws_instance" "example" {
+        ami           = "ami-123456"
+        instance_type = "t2.micro"
+        subnet_id     = aws_subnet.example.id  # Implicit dependency on aws_subnet.example
+        }
+        
+
+19. **Explicit Dependencies**: Use the `depends_on` argument to manually specify dependencies between resources when implicit dependencies are not sufficient.
+
+    Ex: resource "aws_instance" "example" {
+        ami           = "ami-123456"
+        instance_type = "t2.micro"
+        depends_on    = [aws_security_group.example]  # Explicit dependency on aws_security_group.example
+        }
+        
+In this example, the "aws_instance" resource will only be created after the "aws_security_group" resource is successfully created.
+
+20. **Data Sources**: Allow you to fetch and use information from existing resources outside of Terraform's management, enabling integration with external systems.
+
+    Ex: data "aws_ami" "example" {
+        most_recent = true
+        owners      = ["self"]
+        filter {
+            name   = "name"
+            values = ["my-custom-ami-*"]
+        }
+        }
+
+In this example, the data source fetches the most recent AMI owned by the user that matches the specified name pattern.
+
+21. **Terraform Commands**: Familiarity with essential Terraform commands such as 
+`terraform init` to initialize a working directory containing ,required providers and modules,configurations. 
+`terraform plan` to create an execution plan, showing what actions will be taken without making any changes.
+`terraform apply` to execute the actions proposed in the plan and create or update infrastructure.
+`terraform destroy` to remove all resources managed by the configuration.
+`terraform fmt` for formatting code...
+@`terraform validate` to validate the configuration files
+These commands are crucial for managing the lifecycle of your infrastructure.
+
+22. **Remote State**: Storing the Terraform state file in a remote backend (like AWS S3, Terraform Cloud) to enable collaboration and ensure state consistency across team members.
+
+23.aws_instance.example[*].id returns a list of all of the ids of each of the instances.
+aws_instance.example[0].id returns just the id of the first instance.
+
+
+
+
+
+
+
+
+
+
+
+

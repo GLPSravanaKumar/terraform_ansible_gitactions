@@ -14,33 +14,41 @@ module "aws_s3_bucket" {
 module "aws_vpc" {
   source         = "./modules/aws_vpc"
   vpc_cidr_block = var.vpc_cidr_block
+  department     = title(var.department)
 }
 
 module "aws_subnets" {
-  source               = "./modules/aws_subnets"
-  public_subnet_cidrs  = var.public_subnet_cidrs
-  private_subnet_cidrs = var.private_subnet_cidrs
+  source = "./modules/aws_subnets"
+  #distinct: takes a list and returns a new list with any duplicate elements removed.
+  public_subnet_cidrs  = distinct(var.public_subnet_cidrs)
+  private_subnet_cidrs = distinct(var.private_subnet_cidrs)
   vpc_id               = module.aws_vpc.vpc_id
+  #title: converts the first letter of each word in the given string to uppercase.
+  department = title(var.department)
 }
 module "aws_route_tables" {
   source               = "./modules/aws_route_tables"
   vpc_id               = module.aws_vpc.vpc_id
-  public_subnet_cidrs  = var.public_subnet_cidrs
-  private_subnet_cidrs = var.private_subnet_cidrs
+  public_subnet_cidrs  = distinct(var.public_subnet_cidrs)
+  private_subnet_cidrs = distinct(var.private_subnet_cidrs)
   public_subnet_ids    = module.aws_subnets.public_subnet_ids
   private_subnet_ids   = module.aws_subnets.private_subnet_ids
 }
 module "aws_security_groups" {
-  source = "./modules/aws_security_groups"
-  vpc_id = module.aws_vpc.vpc_id
+  source     = "./modules/aws_security_groups"
+  vpc_id     = module.aws_vpc.vpc_id
+  department = title(var.department)
 }
 module "aws_ec2" {
-  source              = "./modules/aws_ec2"
-  public_subnet_cidrs = var.public_subnet_cidrs
-  public_subnet_ids   = module.aws_subnets.public_subnet_ids
-  pub_sg_id           = module.aws_security_groups.pub_sg_id
-  instance_type       = var.instance_type
-  ami                 = var.ami
+  source               = "./modules/aws_ec2"
+  public_subnet_cidrs  = distinct(var.public_subnet_cidrs)
+  public_subnet_ids    = module.aws_subnets.public_subnet_ids
+  pub_sg_id            = module.aws_security_groups.pub_sg_id
+  instance_type        = var.instance_type
+  ami                  = var.ami
+  private_subnet_cidrs = distinct(var.private_subnet_cidrs)
+  private_subnet_ids   = module.aws_subnets.private_subnet_ids
+  private_sg_id        = module.aws_security_groups.private_sg_id
 }
 
 /* module "mongodb" {

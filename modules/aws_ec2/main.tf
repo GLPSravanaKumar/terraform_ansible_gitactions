@@ -31,3 +31,16 @@ resource "aws_instance" "public_servers" {
     Name = "public_webserver-${count.index + 1}"
   }
 }
+
+resource "aws_instance" "private_servers" {
+  count                       = length(var.private_subnet_cidrs)
+  ami                         = lookup(local.ami_map, var.ami)
+  instance_type               = var.instance_type
+  subnet_id                   = element(var.private_subnet_ids, count.index)
+  key_name                    = lookup(local.keypair_map, var.ami)
+  associate_public_ip_address = false
+  vpc_security_group_ids      = [var.private_sg_id]
+  tags = {
+    Name = "private_webserver-${count.index + 1}"
+  }
+}
