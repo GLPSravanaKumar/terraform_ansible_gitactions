@@ -50,6 +50,11 @@ module "aws_ec2" {
   private_subnet_ids   = module.aws_subnets.private_subnet_ids
   private_sg_id        = module.aws_security_groups.private_sg_id
 }
+module "local_file" {
+  source           = "./modules/local_file"
+  public_server_ip = module.aws_ec2.public_server_ip
+}
+
 
 /* module "mongodb" {
   source            = "./modules/mongodb"
