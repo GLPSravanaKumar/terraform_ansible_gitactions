@@ -1,7 +1,7 @@
 resource "null_resource" "configure_server" {
   count = length(var.public_subnet_cidrs)
   triggers = {
-    instance_id = "module.aws_ec2.aws_instance_id"  
+    instance_id = "module.aws_ec2.aws_instance_id"
   }
   provisioner "file" {
     source      = "requirements.sh"
@@ -16,14 +16,16 @@ resource "null_resource" "configure_server" {
 
   provisioner "remote-exec" {
     inline = [
+      "sudo sed -i 's/\r$//' /tmp/requirements.sh",
       "sudo chmod 777 /tmp/requirements.sh",
-      "sudo /tmp/requirements.sh",
+      "sudo /tmp/requirements.sh"
     ]
     connection {
       type        = "ssh"
       user        = "ubuntu"
       private_key = file("optum_sravan_ubuntu.pem")
       host        = element(module.aws_ec2.public_server_ip, count.index)
+      timeout     = "2m"
     }
   }
 
