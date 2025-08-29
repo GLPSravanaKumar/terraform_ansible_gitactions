@@ -17,4 +17,3 @@ https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
 sudo apt update -y
 sudo apt install -y terraform
 
-
