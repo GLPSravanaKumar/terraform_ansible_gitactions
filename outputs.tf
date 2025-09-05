@@ -2,14 +2,14 @@
   value       = module.vpc.az
   description = "The availability zone where the VPC and subnet are created."
 } */
-output "az_rgname1" {
+/* output "az_rgname1" {
   description = "Name of the Azure Resource Group 1"
   value       = module.az_resourcegroup.az_rgname1
 }
 output "az_rgname2" {
   description = "Name of the Azure Resource Group 2"
   value       = module.az_resourcegroup.az_rgname2
-}
+} */
 /* output "mangodb_project_id" {
   value = data.mongodbatlas_project.existing_project.id
 }

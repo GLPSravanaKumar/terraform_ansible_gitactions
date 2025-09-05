@@ -1,10 +1,10 @@
-module "az_resourcegroup" {
+/* module "az_resourcegroup" {
   source       = "./modules/az_resourcegroup"
   az_rgname1   = var.az_rgname1
   az_location1 = var.az_location1
   az_rgname2   = var.az_rgname2
   az_location2 = var.az_location2
-}
+} */
 
 module "aws_s3_bucket" {
   source      = "./modules/aws_s3_bucket"
@@ -45,14 +45,17 @@ module "aws_ec2" {
   public_subnet_ids    = module.aws_subnets.public_subnet_ids
   pub_sg_id            = module.aws_security_groups.pub_sg_id
   instance_type        = var.instance_type
-  ami                  = var.ami
+  ami                  = lookup(local.ami_map, var.ami)
+  key_name             = aws_key_pair.glpskey.key_name
   private_subnet_cidrs = distinct(var.private_subnet_cidrs)
   private_subnet_ids   = module.aws_subnets.private_subnet_ids
   private_sg_id        = module.aws_security_groups.private_sg_id
+  user_data            = lookup(local.user_data, var.ami)
 }
 module "local_file" {
-  source           = "./modules/local_file"
-  public_server_ip = module.aws_ec2.public_server_ip
+  source            = "./modules/local_file"
+  public_server_ip  = module.aws_ec2.public_server_ip
+  private_server_ip = module.aws_ec2.private_server_ip
 }
 
 

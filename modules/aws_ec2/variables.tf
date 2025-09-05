@@ -24,3 +24,9 @@ variable "private_sg_id" {
 variable "private_subnet_cidrs" {
   description = "private subnet cidr values"
 }
+variable "key_name" {
+  description = "instance access key name"
+}
+variable "user_data" {
+  description = "user data to attaced to instances"
+}

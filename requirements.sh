@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 
 # Install dependencies
 sudo apt update -y
@@ -16,4 +17,15 @@ https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
 # Install terraform
 sudo apt update -y
 sudo apt install -y terraform
+sudo apt install software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible -y
+sudo apt update && sudo apt upgrade -y
+INDEX=$1
+
+if [[ "$HOSTNAME" == *"public"* ]]; then
+  sudo hostnamectl set-hostname public-server-${INDEX}
+else
+  sudo hostnamectl set-hostname private-server-${INDEX}
+fi
 

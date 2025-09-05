@@ -8,22 +8,23 @@ resource "null_resource" "configure_server" {
     destination = "/tmp/requirements.sh"
     connection {
       type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("optum_sravan_ubuntu.pem")
+      user        = var.ami == "ubuntu" ? "ubuntu" : "ec2-user"
+      private_key = file("~/.ssh/id_ed25519_glpskumar")
       host        = element(module.aws_ec2.public_server_ip, count.index)
     }
   }
 
   provisioner "remote-exec" {
     inline = [
+      "sleep ${count.index * 20}", # wait 20s * index
       "sudo sed -i 's/\r$//' /tmp/requirements.sh",
-      "sudo chmod 777 /tmp/requirements.sh",
+      "sudo chmod +x /tmp/requirements.sh",
       "sudo /tmp/requirements.sh"
     ]
     connection {
       type        = "ssh"
-      user        = "ubuntu"
-      private_key = file("optum_sravan_ubuntu.pem")
+      user        = var.ami == "ubuntu" ? "ubuntu" : "ec2-user"
+      private_key = file("~/.ssh/id_ed25519_glpskumar")
       host        = element(module.aws_ec2.public_server_ip, count.index)
       timeout     = "2m"
     }

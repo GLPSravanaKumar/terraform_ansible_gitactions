@@ -1,14 +1,11 @@
 # Public Servers
 [public_servers]
-public_server_1 ansible_port=22 ansible_user=ubuntu ansible_ssh_private_key_file=optum_sravan_ubuntu.pem 
-ansible_host=${public_server_1}
-public_server_2 ansible_port=22 ansible_user=ubuntu ansible_ssh_private_key_file=optum_sravan_ubuntu.pem
-ansible_host=${public_server_2}
-public_server_3 ansible_port=22 ansible_user=ubuntu ansible_ssh_private_key_file=optum_sravan_ubuntu.pem
-ansible_host=${public_server_3}
-public_server_4 ansible_port=22 ansible_user=ubuntu ansible_ssh_private_key_file=optum_sravan_ubuntu.pem
-ansible_host=${public_server_4}
+%{ for i, ip in public_servers ~}
+public_server_${i + 1} ansible_port=22 ansible_user=ubuntu ansible_ssh_private_key_file=glpskey ansible_host=${ip}
+%{ endfor ~}
 
-# Grouping both together
-[all_servers:children]
-public_servers
+# Private Servers
+[private_servers]
+%{ for i, ip in private_servers ~}
+private_server_${i + 1} ansible_port=22 ansible_user=ubuntu ansible_ssh_private_key_file=glpskey  ansible_host=${ip}
+%{ endfor ~}
